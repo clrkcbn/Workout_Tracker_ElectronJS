@@ -1,0 +1,37 @@
+# Stable identity: keep appId and productName unchanged across releases so
+# installer updates replace the program files while %APPDATA%\Pixel Gym Journal
+# (where the workout database lives) is left untouched.
+appId: com.clarkcabillon.pixelgymjournal
+productName: Pixel Gym Journal
+copyright: Copyright © 2026 Clark Cabillon
+
+directories:
+  buildResources: build
+  output: release/${version}
+
+files:
+  - out/**/*
+  - package.json
+
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: build/icon.ico
+  executableName: PixelGymJournal
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: Pixel Gym Journal
+  uninstallDisplayName: Pixel Gym Journal
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  # Never wipe workout data on uninstall or update.
+  deleteAppDataOnUninstall: false
+  artifactName: Pixel-Gym-Journal-Setup-${version}.${ext}
